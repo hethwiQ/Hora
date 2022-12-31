@@ -1,44 +1,40 @@
 <head>
     <link rel="stylesheet" href="index.css">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="container">
-        <span class="header">HethwiQ</span>
-        <span class="subheader">I coded this website myself, so it is not so eye-catchy 😉</span>
-        <div class="row">
-            <div class="home-page-link col-4">
-                <a href="./tech_home.html">
-                    <img class="home-page-img" src="./assets/images/tech_pic.jpg">
-                    <span class="link-label">Coding/Tech</span>
-                </a>
-            </div>
-            <div class="home-page-link col-4">
-                <a href="./music_home.html">
-                    <img class="home-page-img" src="./assets/images/guitar_pic.jpg">
-                    <span class="link-label">Music</span>
-                </a>
-            </div>
-            <div class="home-page-link col-4">
-                <a href="./youtube_home.html">
-                    <img class="home-page-img" src="./assets/images/adventure_pic.jpg">
-                    <span class="link-label">Adventure</span>
+    <h1>Hora Notation calculator!</h1>
+    <p>Enter your code below and it will calculate its Time complexity!</p>
 
-                </a>
-            </div>
-        </div>
-        
-        
+    <div>
+        <label for="languageOption">Select Language: </label>
+        <select id="languageOption">
+            <option>Java</option>
+            <option>C</option>
+            <option>C++</option>
+            <option>Python</option>
+            <option>C#</option>
+            <option>Javascript</option>
+            <option>Swift</option>
+        </select>
     </div>
-    
-    
-    <!-- <h3><a href="BigO.html">Big O Notation Calculator</a></h3> -->
+
+    <div>
+        <label for="codeInput">Enter code:</label>
+    </div>
+    <div>
+        <textarea spellcheck="false" id="codeInput" rows=10 cols="80" placeholder="write a 'for' Loop!"></textarea>
+    </div>
+
+    <div>
+        <button id="getHoraBtn">Get Hora!</button>
+    </div>
+
+
+    <div>
+        <h2>Result:</h2>
+        <h2 id="resultShow"></h2>
+    </div>
 </body>
-
-<footer>
-
-</footer>
+<script src="HoraCalc.js"></script>
+<script src="index.js"></script>
