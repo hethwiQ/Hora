@@ -21,6 +21,6 @@ getHoraBtn.onclick = function() {
 function parseInput(code) {
     let newlineSplit = code.split("\n")
     let forStatements = getForStatements(newlineSplit);
-    let result = getBigONotation(forStatements);
+    let result = getHoraNotation(forStatements);
     return result;
 }
