@@ -1,4 +1,4 @@
-const comparisonOperators = [">=", "<=", "==", "!=", ">", "<"]
+const comparisonOperators = [">", "<", ">=", "<=", "==", "!="]
 const operations = ["+=", "-=", "/=", "*=", "++", "--", "="]
 const arithOperations = ["+", "-", "/", "*"]
 
@@ -9,8 +9,7 @@ const arithOperations = ["+", "-", "/", "*"]
         2. The number of logN's in the string
 */
 
-function getBiggestHoraString(horabjs) {
-    var horaStrings = bighorabjs.map(x => x['HoraString']);
+function getBiggestHoraString(horaStrings) {
 
     var numberNsList = [];
     var maxNs = 0;
@@ -19,7 +18,7 @@ function getBiggestHoraString(horabjs) {
         var numberNs = 0;
         for(var k = 0; k < horaStr.length; k++) {
             var c = horaStr[k];
-            if (c === 'N') {
+            if (c == 'N') {
                 numberNs++;
             }
         }
@@ -32,34 +31,27 @@ function getBiggestHoraString(horabjs) {
     }
 
 
-    topBigNStrings = [];
+    topHoraStrings = [];
     for(var i = 0; i < numberNsList.length; i++) {
-        if(numberNsList[i] === maxNs) {
-            topBigNStrings.push(horaStrings[i]);
+        if(numberNsList[i] == maxNs) {
+            topHoraStrings.push(horaStrings[i]);
         }
     }
 
 
-    // if there is only one top N string, stop there
-    if(topBigNStrings.length == 1) {
-        var res;
-        for(var i = 0; i < horaStrings.length; i++) {
-            if(horaStrings[i] === topBigNStrings[0]) {
-                res = horabjs[i];
-            }
-        }
-        return res;
+    if(topHoraStrings.length == 1) {
+        return topHoraStrings[0];
     }
 
     // if not, check the next criteria of logs
     var maxLsIndex = 0;
     var maxLsCount = 0;
-    for(var i = 0; i < topBigNStrings.length; i++) {
-        var str = topBigNStrings[i];
+    for(var i = 0; i < topHoraStrings.length; i++) {
+        var str = topHoraStrings[i];
         var LsCount = 0;
         for(var k = 0; k < str.length; k++) {
             var c = str[k];
-            if(c === 'L') {
+            if(c == 'L') {
                 LsCount++;
             }
         }
@@ -70,47 +62,22 @@ function getBiggestHoraString(horabjs) {
         }
     }
 
-    var res = topBigNStrings[maxLsIndex];
-
-    for(var i = 0; i < horaStrings.length; i++) {
-        if(horaStrings[i] === res) {
-            res = horabjs[i];
-        }
-    }
-
-    return res;
+    return topHoraStrings[maxLsIndex];
 
 }
 
-function evalToHoraChar(eval) {
-    if(eval === "lin") {
-        return "N";
-    }
-
-    else if(eval === 'log') {
-        return "L";
-    }
-    
-    else if(eval === "const") {
-        return "O";
-    }
-
-    else {
-        return "E";
-    }
-
-}
-
-function translateHoraStringToHora(horaString) {
+function translateBigHoraStringToHora(HoraString) {
     var nCount = 0;
     var lCount = 0;
 
-    for(var i = 0; i < horaString.length; i++) {
-        var c = horaString[i];
-        if (c === 'N') {
+    console.log("HoraString " + HoraString);
+
+    for(var i = 0; i < HoraString.length; i++) {
+        var c = HoraString[i];
+        if (c == 'N') {
             nCount++;
         }
-        else if(c === 'L') {
+        else if(c == 'L') {
             lCount++;
         }
     }
@@ -157,13 +124,10 @@ function getForStatements(linesOfCode) {
                 "level": level
             }
             forStatements.push(lineObj);
-
-            // up the level because we are now within the for loop
             level += 1;
         }
 
         if(isClosingStatement > -1) {
-            // down the level because we are now out of a for loop
             level -= 1;
         }
     });
@@ -172,9 +136,9 @@ function getForStatements(linesOfCode) {
 }
 
 function checkAlphaNumeric(lexicon) {
-    const alphaRegex = "^[a-zA-Z.]*$"
-    const numericRegex = "^-?[0-9.]*$"
-    const alphaNumericRegex = "^[a-zA-Z0-9.]*$"
+    const alphaRegex = "^[a-zA-Z]*$"
+    const numericRegex = "^[0-9]*$"
+    const alphaNumericRegex = "^[a-zA-Z0-9]*$"
 
     lexicon = lexicon.trim();
 
@@ -201,119 +165,33 @@ function checkAlphaNumeric(lexicon) {
 
 }
 
-function evaluateForLoopElements(initValue, rangeStop, rangeOp, inc) {
-    let initValueType = checkAlphaNumeric(initValue);
-    if(initValueType === "var") {
-        let rangeStopType = checkAlphaNumeric(rangeStop);
-        if(rangeStopType === "var") {
-            return "const";
-        }
-        else if(rangeStopType === "num") {
-            if(rangeOp === "<=" || rangeOp === "<") {
-                return "err";
-            }
-            else if(rangeOp === ">=" || rangeOp === ">") {
-                if(inc === "--" || inc === "-=") {
-                    return "lin";
-                }
-                else if(inc === "/=") {
-                    return "log";
-                }
-                else {
-                    return "err";
-                }
-            }
-        }
-        else {
-            return "err";
-        }
-    }
-    else if(initValueType === "num") {
-        let rangeStopType = checkAlphaNumeric(rangeStop);
-        if(rangeStopType === "var") {
-            if(rangeOp === "<=" || rangeOp === "<") {
-                if(inc === "++" || inc === "+=") {
-                    return "lin";
-                }
-                else if(inc === "*=") {
-                    let pf = parseFloat(initValue);
-                    if(pf > 0) {
-                        return "log";
-                    }
-                    else {
-                        return "err";
-                    }
-                }
-                else {
-                    return "err";
-                }
-            }
-            else if(rangeOp === ">=" || rangeOp === ">") {
-                return "err";
-            }
-        }
-        else if(rangeStopType === "num") {
-            return "const";
-        }
-        else {
-            return "err";
-        }
-    }
-    else {
-        return "err";
-    }
-}
+function evaluateForStatement(forLine) {
+    let forLineSplit = forLine['line'].split("(");
+    let level = forLine['level'];
+    let forLineLogic = forLineSplit[1].split(";");
 
-function semiColonSplit(forLine, level) {
-    let forLineLogic = forLine.split(";");
+    let varInstantiation = forLineLogic[0];
+    let range = forLineLogic[1];
+    let operation = forLineLogic[2].split(")")[0];
 
-    try {
-        var varInstantiation = forLineLogic[0];
-        var range = forLineLogic[1];
-        var operation = forLineLogic[2].split(")")[0];
-    
-        // get init value
-        var initValue = varInstantiation.split("=");
-        initValue = initValue[initValue.length - 1];
+    var initValue = varInstantiation.split("=");
+    initValue = initValue[initValue.length - 1];
 
-        if(!initValue || !range || !operation) {
-            return {
-                "eval": "err",
-                "level": level
-            }
-        }
-    }
-    catch {
-        return {
-            "eval": "err",
-            "level": level
-        }
-    }
-   
-
-    // read range stop where the loop will end and the operation being performed
     var rangeStop;
-    var rangeOp;
     for(var i = 0; i < comparisonOperators.length; i++) {
         let op = comparisonOperators[i];
         if(range.indexOf(op) > -1) {
             let rangeStopSplit = range.split(op);
-            rangeOp = op;
             rangeStop = rangeStopSplit[rangeStopSplit.length - 1];
             break;
         }
     }
 
-    // read operation
     var operationDone;
     for(var i = 0; i < operations.length; i++) {
         let op = operations[i];
         if(operation.indexOf(op) > -1) {
             if(op === "=") {
-                // a little more complex
-                // ensure right side format is => variable op val
-
-                // this is just a use case that is wayyy too variable.
                 operationDone = "lazy"
                 
             }
@@ -323,14 +201,13 @@ function semiColonSplit(forLine, level) {
                     let typeCheck = checkAlphaNumeric(lex)
   
                     if(typeCheck === "var") {
-                        operationDone = evaluateForLoopElements(initValue, rangeStop, rangeOp, op);
+                        operationDone = "lin";
                     }
                     else {
                         operationDone = "err";
                     }   
                 }
                 if (op === "+=" || op === "-=") {
-                    // ensure right side is numeric and > 0
                     let operationSplit = operation.split(op);
                     let leftLex = operationSplit[0];
                     let rightLex = operationSplit[1];
@@ -343,7 +220,7 @@ function semiColonSplit(forLine, level) {
                             rightLex = rightLex.trim();
                             let rightLexVal = Number(rightLex);
                             if(rightLexVal > 0) {
-                                operationDone = evaluateForLoopElements(initValue, rangeStop, rangeOp, op);
+                                operationDone = "lin";
                             }
                             else {
                                 operationDone = "err";
@@ -359,8 +236,6 @@ function semiColonSplit(forLine, level) {
                 }
 
                 if(op === "*=" || op === "/=") {
-                    // ensure right side is numeric and > 1
-                    // ensure right side is numeric and > 0
                     let operationSplit = operation.split(op);
                     let leftLex = operationSplit[0];
                     let rightLex = operationSplit[1];
@@ -373,7 +248,7 @@ function semiColonSplit(forLine, level) {
                             rightLex = rightLex.trim();
                             let rightLexVal = Number(rightLex);
                             if(rightLexVal > 1) {
-                                operationDone = evaluateForLoopElements(initValue, rangeStop, rangeOp, op);
+                                operationDone = "log";
                             }
                             else {
                                 operationDone = "err";
@@ -397,76 +272,12 @@ function semiColonSplit(forLine, level) {
         "eval": operationDone,
         "level": level
     }
-}
-
-function colonSplit(forLine, level) {
-
-    let forLineLogic = forLine.split(":");
-
-    try {
-        var varInstantiation = forLineLogic[0];
-        var range = forLineLogic[1].split(")")[0];
-        
-        // get init value
-        var initValue = varInstantiation.split(" ")[1];
-
-        if(!initValue || !range) {
-            return {
-                "eval": "err",
-                "level": level
-            }
-        }
-    }
-    catch {
-        return {
-            "eval": "err",
-            "level": level
-        }
-    }
-
-    var operationDone;
-    let initTypeCheck = checkAlphaNumeric(initValue);
-    if(initTypeCheck === "var") {
-        rangeTypeCheck = checkAlphaNumeric(range);
-        if(rangeTypeCheck === "var") {
-            operationDone = "lin";
-        }
-        else if(rangeTypeCheck === "num") {
-            operationDone = "const";
-        }
-        else {
-            operationDone = "err";
-        }
-    }
-    else {
-        operationDone = "err";
-    }
-
-    return {
-        "eval": operationDone,
-        "level": level
-    }
-}
-
-function evaluateForStatement(forLine) {
-    let forLineSplit = forLine['line'].split("(");
-    let level = forLine['level'];
-
-    forLine = forLineSplit[1];
-    if(forLine.indexOf(":") > -1) {
-        return colonSplit(forLine, level);
-    }
-
-    else {
-        return semiColonSplit(forLine, level);
-    }
 
 }
 
 function getHoraNotation(forStatements) {
     var val_results = [];
     forStatements.forEach(forLine => {
-        // evaluate the notation of the for loop
         let r = evaluateForStatement(forLine);
         val_results.push(r);
     })
@@ -476,77 +287,61 @@ function getHoraNotation(forStatements) {
     var horaList = [];
     var hasError = false;
     var isLazy = false;
-    var evalChars = [];
-    var levelOneIndex = 0;
     for(var i = 0; i < val_results.length; i++) {
         let val_result = val_results[i];
         let eval = val_result['eval'];
         let level = val_result['level'];
 
         if(i != 0 && level == 1) {
-            let horaObj = {
-                "horaString": horaString,
-                "start_index": levelOneIndex,
-                "end_index": i-1
-            }
-            horaList.push(horaObj);
-            levelOneIndex = i;
+            horaList.push(horaString);
             horaString = "";
         }
 
         if(eval === "err") {
             hasError = true;
+            break;
         }
 
-        if(eval === "lazy") {
+        if(eval == "lazy") {
             isLazy = true;
+            break;
         }
 
-        let char = evalToHoraChar(eval);
-        if(char === "E") {
+        else if(eval === "lin") {
+            horaString += "N";
+        }
+
+        else if(eval == 'log') {
+            horaString += "L"
+        }
+        
+        else if(eval == "const") {
+            horaString += "O"
+        }
+
+        else {
             hasError = true;
         }
-        else {
-            horaString += char;
-            evalChars.push(char);
-        }
+
     }
 
-    horaList.push({
-        "horaString": horaString,
-        "start_index": levelOneIndex,
-        "end_index": i-1
-    });
-
-    horaRes = getBiggestHoraString(horaList);
-    var finalResult = translateHoraStringToHora(horaRes['horaString']);
-    var final_start_ind = horaRes['start_index'];
-    var final_end_ind = horaRes['end_index'];
-
-    // now set the code analysis
-    forLineHoraEvals = [];
-    evalChars.forEach(c => {
-        forLineHoraEvals.push(translateHoraStringToHora(c));
-    })
+    horaList.push(horaString);
 
     if(hasError) {
-        finalResult = "⚠️ Error, make sure the syntax of your code" +
-        "code is correct or that it's logic doesn't create an infinite loop.";  
+        return "⚠️ Error, make sure the syntax of your code" +
+        "code is correct or that it's logic doesn't create an infinite loop.";    
     }
 
     if(isLazy) {
-        finalResult = "Congrats🎉, you found a use case that I am really too lazy 🦥 to implement. " +
+        return "Congrats🎉, you found a use case that I am really too lazy 🦥 to implement. " +
         "It's not that it's IMPOSSIBLE to do, but there are so many insane edge cases to this " +
         "that I decided it wasn't worth the hassle. Please, use a simpler for loop that uses" +
         " operators like ++, --, +=, -=, *=, /=";
     }
 
-    return {
-        "final": finalResult,
-        "forLines": forStatements,
-        "forLineEvals": forLineHoraEvals,
-        'start': final_start_ind,
-        'end': final_end_ind
-    };
+    horaRes = getBiggestHoraString(horaList);
+    var finalResult = translateBigHoraStringToHora(horaRes);
+
+    return finalResult;
 
 }
