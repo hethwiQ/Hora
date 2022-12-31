@@ -329,7 +329,7 @@ function getHoraNotation(forStatements) {
 
     if(hasError) {
         return "⚠️ Error, make sure the syntax of your code." +
-        "code is correct or that it's logic doesn't create an infinite loop.";    
+        " code is correct or that it's logic doesn't create an infinite loop.";    
     }
 
     if(isLazy) {
