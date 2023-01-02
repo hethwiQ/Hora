@@ -5,7 +5,7 @@
     }
     
     body{
-        background-image: linear-gradient( #171515,#171515,#0076ff);
+        background-image: linear-gradient( #0d1117,#0d1117,#0d1117);
         text-align:center;
     }
     </style>
@@ -13,15 +13,17 @@
     
     <link rel="stylesheet" href="index.css">
 </head>
-<header style="background-color: #8590aa;">
-    <h3 style="color: #ffffff; font-size: 30px;padding: 12px; text-align: left; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, Courier, monospace;">HorA</h3>
+<header style="background-color:#161b22 ; border-radius: 6px; border-color: #c4dbf6;">
+    <h3 style="color:#f0f6fc; font-size: 30px;padding: 12px; text-align: left; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, Courier, monospace;">HorA</h3>
 
 </header>
 <body>
     
-    <h3>Time Complexity Calculator </h3>
-    <p>Enter your code below and it will calculate its Time complexity!</p>
-    <p>Not All the codes work, this is just a prototype🚩. so keep your expectations low 😉.</p>
+    <h3 style="color: #58a6ff; font-weight: 600;">Time Complexity Calculator </h3>
+    <div>
+     <p style="font-style: italic; color: #8b949e;">Enter your code below and it will calculate its Time complexity!</p>
+     <p style="font-style: italic; color: #8b949e;">Not All the codes work, this is just a prototype🚩. so keep your expectations low 😉.</p>
+    </div>
     <div>
         <p>
             &nbsp;
@@ -29,28 +31,29 @@
             &nbsp;
             &nbsp;
         </p>
-        <label for="languageOption" style="font-family:verdana;">Select Language: </label>
-        <select id="languageOption" style="font-family:verdana; background-color: #c4dbf6; color: #8590aa; width:200px;">
-            <option style="color:#8590aa;">Java</option>
-            <option style="color:#8590aa;">C</option>
-            <option style="color:#8590aa;">C++</option>
-            <option style="color:#8590aa;">Python</option>
-            <option style="color:#8590aa;">C#</option>
-            <option style="color:#8590aa;">Javascript</option>
-            <option style="color:#8590aa;">Swift</option>
+        <label for="languageOption" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; border-radius: 12px; color: #58a6ff ">Select Language 👇 </label>
+        <p>   </p>
+        <select id="languageOption" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; border-radius: 6px; border: 1px solid; background-color: #21262d; color: #c9d1d9; width:200px;border-radius: 7px; text-align:center; padding: 2px;">
+            <option style="color:#c9d1d9;">Java</option>
+            <option style="color:#c9d1d9;">C</option>
+            <option style="color:#c9d1d9;">C++</option>
+            <option style="color:#c9d1d9;">Python</option>
+            <option style="color:#c9d1d9;">C#</option>
+            <option style="color:#c9d1d9;">Javascript</option>
+            <option style="color:#c9d1d9;">Swift</option>
         </select>
     </div>
     <p>
         &nbsp;
     </p>
     <div>
-        <label for="codeInput" style="font-family:verdana;">Enter your code:</label>
+        <label for="codeInput" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Enter your code:</label>
     </div>
     <p>                  
                  
     </p>
     <div>
-        <textarea spellcheck="false" id="codeInput" rows=10 cols="80" placeholder="write a 'for' Loop!"></textarea>
+        <textarea spellcheck="false" id="codeInput" rows=10 cols="80" placeholder=" write a 'for' Loop!" style="padding-right: 10px; padding-left: 10px; line-height: 20px; vertical-align: top;position: relative;word-wrap: anywhere;font-size: 15px; background-color:#161b22;border-radius: 12px ;font-family: 'Courier New', Courier, monospace;"></textarea>
     </div>
     <p>
         &nbsp;
@@ -59,7 +62,7 @@
         &nbsp;
     </p>
     <div>
-        <button id="getHoraBtn" style="font-family:verdana; border-radius: 12px; border: none; padding: 12px;background-color: #ffffff;color: #77a6f7; text-align: center; text-decoration: none;display: inline-block; margin: 4px 2px; font-size: 16px;">Get Time Complexity!</button>
+        <button id="getHoraBtn" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; border-radius: 6px; border: none; padding: 3px 12px; line-height: 25px;background-color: #238636;color: #ffffff; text-align: center; text-decoration: none;display: inline-block; margin: 4px 2px; font-size: 16px;">Get Time Complexity!</button>
     </div>
 
 
@@ -67,7 +70,7 @@
         <h2>Result:</h2>
         <h2 id="resultShow"></h2>
     </div>
-    <p style="font-family:verdana;">☕ Made By HethwiQ 😎</p>
+    <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">☕ Made By HethwiQ 😎</p>
 
 </body>
 <script src="HoraCalc.js"></script>
