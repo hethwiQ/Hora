@@ -333,7 +333,7 @@ function getHoraNotation(forStatements) {
     }
 
     if(isLazy) {
-        return "Congrats🎉, you found a use case that I am really too lazy 🦥 to implement. " +
+        return "😔 Sorry, The usecase you entered is too complex for this algorithm to handle(You can collab with me to improve it by clicking on <HORA> logo on top; in the github)." +
         "It's not that it's IMPOSSIBLE to do, but there are so many insane edge cases to this " +
         "that I decided it wasn't worth the hassle. Please, use a simpler for loop that uses" +
         " operators like ++, --, +=, -=, *=, /=";
